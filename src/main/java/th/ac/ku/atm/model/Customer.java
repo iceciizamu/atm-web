@@ -1,4 +1,4 @@
-package th.ac.ku.atm.modle;
+package th.ac.ku.atm.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
