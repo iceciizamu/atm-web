@@ -69,8 +69,7 @@ public class BankAccountController {
         return "bankaccount-withdraw";
     }
     @PostMapping("/withdraw/{id}")
-    public String withDrawAccount (@PathVariable int i
-    ,@ModelAttribute BankAccount bankAccount,Model model){
+    public String withDrawAccount (@PathVariable int id,@ModelAttribute BankAccount bankAccount,Model model){
         bankAccountService.withDrawBankAccount(bankAccount);
         model.addAttribute("bankaccounts",bankAccountService.getBankAccounts());
         return "redirect:/bankaccount";
@@ -83,8 +82,7 @@ public class BankAccountController {
         return "bankaccount-deposit";
     }
     @PostMapping("/deposit/{id}")
-    public String DepositAccount (@PathVariable int i
-            ,@ModelAttribute BankAccount bankAccount,Model model){
+    public String DepositAccount (@PathVariable int id,@ModelAttribute BankAccount bankAccount,Model model){
         bankAccountService.depositBankAccount(bankAccount);
         model.addAttribute("bankaccounts",bankAccountService.getBankAccounts());
         return "redirect:/bankaccount";
