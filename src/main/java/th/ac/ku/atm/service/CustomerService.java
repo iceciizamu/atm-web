@@ -16,7 +16,10 @@ public class CustomerService {
         this.repository = repository;
     }
 
-
+    private String hash(String pin){
+        String salt = BCrypt.gensalt(12);
+        return BCrypt.hashpw(pin,salt);
+    }
 
     public void createCustomer(Customer customer){
         //.. hash pin for customer..
@@ -26,9 +29,6 @@ public class CustomerService {
 
     }
 
-    public List<Customer> getCustomers(){
-        return repository.findAll();
-    }
 
     public Customer findCustomer(int id) {
         try {
@@ -38,20 +38,23 @@ public class CustomerService {
         }
 
     }
+    public List<Customer> getCustomers(){
+        return repository.findAll();
+    }
+
 
     public Customer checkPin(Customer inputCustomer){
         Customer storedCustomer = findCustomer(inputCustomer.getId());
 
         if(storedCustomer != null){
             String hashPin = storedCustomer.getPin();
-            if(BCrypt.checkpw(inputCustomer.getPin(),hashPin));
+            if (BCrypt.checkpw(inputCustomer.getPin(),hashPin))
                 return storedCustomer;
         }
-        return null;
+
+            return null;
+
     }
 
-    private String hash(String pin){
-      String salt = BCrypt.gensalt(12);
-      return BCrypt.hashpw(pin,salt);
-    }
+
 }

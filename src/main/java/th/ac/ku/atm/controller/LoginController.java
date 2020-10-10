@@ -27,23 +27,26 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping
-    public String login(@ModelAttribute Customer customer
-    , Model model){
-        // 1.check to see if id and pin macthed customer info
-        Customer matchingCustomer = customerService.checkPin(customer);
-        //2.ถ้า macth มันก็จะ welcome customer
-        if (matchingCustomer != null){
-            model.addAttribute("customertitle",matchingCustomer.getName()+" Bank Accounts");
-            model.addAttribute("bankaccounts",bankAccountService.getCustomerBankAccounts(customer.getId()));
 
-            return "customeraccount";
-        }else{
-            //3. not macth display incorrect
-            model.addAttribute("greeting","Can't find customer");
-            return "home";
-        }
+   @PostMapping
+   // 1.check to see if id and pin matched customer info
+   public String login(@ModelAttribute Customer customer, Model model) {
+       Customer storedCustomer = customerService.checkPin(customer);
+       //2.ถ้า match มันก็จะ welcome customer
 
 
-    }
+       if (storedCustomer != null) {
+           model.addAttribute("customertitle",
+                   storedCustomer.getName() + " Bank Accounts");
+           model.addAttribute("bankaccounts",
+                   bankAccountService.getCustomerBankAccounts(customer.getId()));
+
+           return "customeraccount";
+           //3. not match display incorrect
+       } else {
+           model.addAttribute("greeting", "Can't find customer");
+           return "home";
+       }
+   }
+
 }
